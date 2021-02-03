@@ -7,13 +7,12 @@
 
 import Foundation
 
-struct GetData {
-    
-    static let shared = GetData()
-    
+struct NetworkService {
+    static let shared = NetworkService()
     private let jsonDecoder = Utils.jsonDecoder
+    typealias HandleForMovieList = (Result<[Movie],Error>) -> ()
     
-    func getMoviesList(completion: @escaping (ResponseEnum<[Result]>) -> ()) {
+    func getMoviesList(completion: @escaping HandleForMovieList) {
         guard let url = URL(string: "https://api.themoviedb.org/3/movie/popular?api_key=ecde1313ab4f7f72fb55ae39b128564a&language=en-US&page=1") else { return }
         
         let session = URLSession(configuration: .default)
@@ -21,23 +20,19 @@ struct GetData {
             
             guard error == nil else {
                 let taskError = NSError(domain: "", code: ErrorCode.taskError.rawValue, userInfo: nil)
-                completion(.Error(taskError))
-                
+                completion(.failure(taskError))
                 return
             }
             
             guard let data = data else {
                 let emptyData = NSError(domain: "", code: ErrorCode.emptyData.rawValue, userInfo: nil)
-                completion(.Error(emptyData))
-                
+                completion(.failure(emptyData))
                 return
             }
             
             do {
-                
                 let decodedResponse = try self.jsonDecoder.decode(Movies.self, from: data)
-                
-                var resultArray = [Result]()
+                var movieArray = [Movie]()
                 
                 for i in decodedResponse.results {
                     let overview = i.overview
@@ -46,13 +41,12 @@ struct GetData {
                     let title = i.title
                     let id = i.id
                     
-                    resultArray.append(Result(id: id, overview: overview, posterPath: posterPath, releaseDate: releaseDate, title: title))
+                    movieArray.append(Movie(id: id, overview: overview, posterPath: posterPath, releaseDate: releaseDate, title: title))
                 }
-                completion(.Value(resultArray))
-                
+                completion(.success(movieArray))
             } catch {
                 let parseError = NSError(domain: "", code: ErrorCode.parseError.rawValue, userInfo: nil)
-                completion(.Error(parseError))
+                completion(.failure(parseError))
             }
         }.resume()
     }

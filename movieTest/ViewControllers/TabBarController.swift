@@ -8,22 +8,21 @@
 import UIKit
 
 class TabBarController: UITabBarController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         makeTab()
     }
     
     func makeTab() {
         let storyboard = UIStoryboard(name: "List", bundle: nil)
         
-        let listViewController = storyboard.instantiateViewController(withIdentifier: "ListViewController") as! ListViewController
+        guard let listViewController = storyboard.instantiateViewController(withIdentifier: "ListViewController") as? ListViewController else { return }
         
         let listVC = UINavigationController(rootViewController: listViewController)
         listVC.tabBarItem = UITabBarItem(tabBarSystemItem: .bookmarks, tag: 0)
         
-        let favouriteViewController = storyboard.instantiateViewController(withIdentifier: "FavouritesViewController") as! FavouritesViewController
+        guard let favouriteViewController = storyboard.instantiateViewController(withIdentifier: "FavouritesViewController") as? FavouritesViewController else { return }
         
         let favouriteVC = UINavigationController(rootViewController: favouriteViewController)
         favouriteVC.tabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 0)

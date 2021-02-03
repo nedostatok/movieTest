@@ -8,12 +8,11 @@
 import UIKit
 
 class DetailViewController: UIViewController {
-    
     @IBOutlet weak var movieImage: UIImageView!
     @IBOutlet weak var movieYear: UILabel!
     @IBOutlet weak var movieDescription: UILabel!
     
-    var selected: Result?
+    var selected: Movie?
     
     override func viewDidLoad() {
         super.viewDidLoad()

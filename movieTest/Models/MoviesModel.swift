@@ -7,20 +7,12 @@
 
 import Foundation
 
-enum ResponseEnum<T> {
-    case Error(NSError)
-    case Value(T)
-    
-}
-
 struct Movies: Decodable {
-    let results: [Result]
-    
+    let results: [Movie]
 }
 
 // MARK: - Result
-struct Result: Decodable {
-  //  let genreIDS: [Int]
+struct Movie: Decodable {
     let id: Int
     let overview: String
     let posterPath: String

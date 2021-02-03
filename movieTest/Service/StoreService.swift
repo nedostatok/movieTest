@@ -13,7 +13,7 @@ final class StoreService {
     static let shared = StoreService()
     private init() {}
     
-    func createMovie(movie: Result) {
+    func createMovie(movie: Movie) {
         
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         let context = appDelegate.persistentContainer.viewContext

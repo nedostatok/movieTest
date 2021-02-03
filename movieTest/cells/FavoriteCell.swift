@@ -8,7 +8,6 @@
 import UIKit
 
 class FavoriteCell: UITableViewCell {
-    
     @IBOutlet weak var movieImage: UIImageView!
     @IBOutlet weak var movieName: UILabel!
     @IBOutlet weak var releaseYear: UILabel!

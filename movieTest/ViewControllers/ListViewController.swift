@@ -9,21 +9,32 @@ import UIKit
 import CoreData
 
 class ListViewController: UIViewController {
-    
     @IBOutlet weak var tableView: UITableView!
     
-    var arrayMovies = [Result]()
+    var arrayMovies = [Movie]() {
+        didSet {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.tableView.reloadData()
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         fetchData()
-        
-        self.navigationItem.title = "MovieList"
-        self.view.backgroundColor = .systemGray
+        addLongPress()
+        customizeinterface()
         
         tableView.register(FilmsTableViewCell.self, forCellReuseIdentifier: FilmsTableViewCell.identifier)
-        
+    }
+    
+    func customizeinterface() {
+        self.navigationItem.title = "MovieList"
+        self.view.backgroundColor = .systemGray
+    }
+    
+    func addLongPress() {
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.longPress(recognizer:)))
         self.view.addGestureRecognizer(longPressRecognizer)
     }
@@ -33,35 +44,34 @@ class ListViewController: UIViewController {
             
             let touchPoint = recognizer.location(in: self.tableView)
             if let index = self.tableView.indexPathForRow(at: touchPoint)  {
-                
-                let alertController = UIAlertController(title: "AddToFavourites?", message: nil, preferredStyle: .alert)
-                let alertAction = UIAlertAction(title: "Yes", style: .default) { (alert) in
-                    
-                    let addFavourites = self.arrayMovies[index.row]
-                    StoreService.shared.createMovie(movie: addFavourites)
-                }
-                let cancelAction = UIAlertAction(title: "No", style: .cancel, handler: nil)
-                
-                alertController.addAction(alertAction)
-                alertController.addAction(cancelAction)
-                present(alertController, animated: true)
+                createAlertController(index: index)
             }
         }
     }
     
+    func createAlertController(index: IndexPath) {
+        let alertController = UIAlertController(title: "AddToFavourites?", message: nil, preferredStyle: .alert)
+        let alertAction = UIAlertAction(title: "Yes", style: .default) { (alert) in
+            
+            let addFavourites = self.arrayMovies[index.row]
+            StoreService.shared.createMovie(movie: addFavourites)
+        }
+        let cancelAction = UIAlertAction(title: "No", style: .cancel, handler: nil)
+        
+        alertController.addAction(alertAction)
+        alertController.addAction(cancelAction)
+        present(alertController, animated: true)
+    }
+    
     func fetchData() {
-        GetData.shared.getMoviesList { response in
+        NetworkService.shared.getMoviesList { response in
             
             switch response {
-            case let .Value(movies):
+            case let .success(movies):
                 self.arrayMovies = movies
                 
-            case let .Error(error):
+            case let .failure(error):
                 print(error)
-            }
-            
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
             }
         }
     }

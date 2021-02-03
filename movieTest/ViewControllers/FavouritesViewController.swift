@@ -13,9 +13,13 @@ class FavouritesViewController: UIViewController {
     
     var arrayFafourites = [Favourite]() {
         didSet {
-            tableView.reloadData()
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.tableView.reloadData()
+            }
         }
     }
+    
     override func loadView() {
         super.loadView()
         setupTableView()
@@ -23,14 +27,19 @@ class FavouritesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        customizeInterface()
+        addLongPress()
+        setupDelegateForTableView()
+    }
+    
+    func setupDelegateForTableView() {
         tableView.delegate = self
         tableView.dataSource = self
+    }
+    
+    func customizeInterface() {
         self.navigationItem.title = "Favourites"
         self.view.backgroundColor = .systemGray
-        
-        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.longPress(recognizer:)))
-        self.view.addGestureRecognizer(longPressRecognizer)
     }
         
     override func viewWillAppear(_ animated: Bool) {
@@ -38,35 +47,43 @@ class FavouritesViewController: UIViewController {
         arrayFafourites = StoreService.shared.getMovie()
     }
     
+    func addLongPress() {
+        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.longPress(recognizer:)))
+        self.view.addGestureRecognizer(longPressRecognizer)
+    }
+    
     @objc func longPress(recognizer: UILongPressGestureRecognizer) {
         if recognizer.state == UIGestureRecognizer.State.began {
-            
             let touchPoint = recognizer.location(in: tableView)
-            if let index = self.tableView.indexPathForRow(at: touchPoint)  {
-                let alertController = UIAlertController(title: "Remove?", message: nil, preferredStyle: .alert)
-                let yesAction = UIAlertAction(title: "Yes", style: .default) { (action) in
-                    let removeFavourites = self.arrayFafourites[index.row]
-                    
-                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
-                    let context = appDelegate.persistentContainer.viewContext
-                    
-                    context.delete(removeFavourites)
-                    self.arrayFafourites.remove(at: index.row)
-                    
-                    do {
-                        try context.save()
-                        self.tableView.reloadData()
-                    } catch {
-                        print(error.localizedDescription)
-                    }
-                }
-                let cancelAction = UIAlertAction(title: "No", style: .cancel, handler: nil)
-                
-                alertController.addAction(yesAction)
-                alertController.addAction(cancelAction)
-                present(alertController, animated: true, completion: nil)
+            if let index = self.tableView.indexPathForRow(at: touchPoint) {
+                createAlertAndRemoveFavorite(index: index)
             }
         }
+    }
+    
+    func createAlertAndRemoveFavorite(index: IndexPath) {
+        let alertController = UIAlertController(title: "Remove?", message: nil, preferredStyle: .alert)
+        let yesAction = UIAlertAction(title: "Yes", style: .default) { (action) in
+            let removeFavourites = self.arrayFafourites[index.row]
+            
+            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+            let context = appDelegate.persistentContainer.viewContext
+            
+            context.delete(removeFavourites)
+            self.arrayFafourites.remove(at: index.row)
+            
+            do {
+                try context.save()
+                self.tableView.reloadData()
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+        let cancelAction = UIAlertAction(title: "No", style: .cancel, handler: nil)
+        
+        alertController.addAction(yesAction)
+        alertController.addAction(cancelAction)
+        present(alertController, animated: true, completion: nil)
     }
     
     func setupTableView() {

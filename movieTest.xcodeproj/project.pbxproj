@@ -106,7 +106,6 @@
 			children = (
 				CE5563CB25764954001DEAA2 /* AppDelegate.swift */,
 				CE5563CD25764954001DEAA2 /* SceneDelegate.swift */,
-				CE5563CF25764954001DEAA2 /* TabBarController.swift */,
 				CE5563F625765996001DEAA2 /* List.storyboard */,
 				CE5563EF25764D2E001DEAA2 /* ViewControllers */,
 				CEC0BA4225768905002B9D04 /* Models */,
@@ -128,6 +127,7 @@
 				CE5563EC25764D24001DEAA2 /* FavouritesViewController.swift */,
 				CE556407257673E9001DEAA2 /* DetailViewController.swift */,
 				CECBB8312577C7DB00BD5E69 /* DitailFavouriteViewController.swift */,
+				CE5563CF25764954001DEAA2 /* TabBarController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
