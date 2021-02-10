@@ -25,6 +25,7 @@ final class StoreService {
         favouriteObject.setValue(movie.title, forKey: "title")
         favouriteObject.setValue(movie.overview, forKey: "overview")
         favouriteObject.setValue(movie.posterPath, forKey: "posterPath")
+        favouriteObject.setValue(movie.genreIDS, forKey: "genreIds")
         
         do {
             try context.save()

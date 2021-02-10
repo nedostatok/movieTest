@@ -22,7 +22,7 @@ class ListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchData()
+        fetchMovies()
         addLongPress()
         customizeinterface()
         
@@ -63,13 +63,12 @@ class ListViewController: UIViewController {
         present(alertController, animated: true)
     }
     
-    func fetchData() {
+    func fetchMovies() {
         NetworkService.shared.getMoviesList { response in
             
             switch response {
             case let .success(movies):
-                self.arrayMovies = movies
-                
+                self.arrayMovies = movies.results
             case let .failure(error):
                 print(error)
             }

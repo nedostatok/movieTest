@@ -74,20 +74,30 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="genre" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qhL-hS-bHp">
+                                <rect key="frame" x="16" y="272" width="343" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="lvC-Ru-xdV"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="TQz-6F-YfA" firstAttribute="leading" secondItem="lvC-Ru-xdV" secondAttribute="leading" constant="16" id="5MR-ve-8oq"/>
                             <constraint firstItem="lvC-Ru-xdV" firstAttribute="trailing" secondItem="TQz-6F-YfA" secondAttribute="trailing" constant="16" id="FFW-Ik-tMj"/>
+                            <constraint firstItem="lvC-Ru-xdV" firstAttribute="trailing" secondItem="qhL-hS-bHp" secondAttribute="trailing" constant="16" id="M11-dN-dlK"/>
                             <constraint firstItem="TQz-6F-YfA" firstAttribute="height" secondItem="W7J-NU-rW6" secondAttribute="height" multiplier="0.303898" id="Qin-23-hL4"/>
                             <constraint firstItem="Y11-fr-fLE" firstAttribute="leading" secondItem="lvC-Ru-xdV" secondAttribute="leading" constant="16" id="SPp-JI-Buv"/>
                             <constraint firstItem="TQz-6F-YfA" firstAttribute="top" secondItem="lvC-Ru-xdV" secondAttribute="top" constant="20" id="nsu-dn-mJd"/>
                             <constraint firstItem="lvC-Ru-xdV" firstAttribute="trailing" secondItem="Y11-fr-fLE" secondAttribute="trailing" constant="16" id="oZO-SO-DkG"/>
                             <constraint firstItem="Y11-fr-fLE" firstAttribute="top" secondItem="TQz-6F-YfA" secondAttribute="bottom" constant="21" id="t0v-vb-Ge8"/>
+                            <constraint firstItem="qhL-hS-bHp" firstAttribute="leading" secondItem="lvC-Ru-xdV" secondAttribute="leading" constant="16" id="vF7-G1-418"/>
+                            <constraint firstItem="qhL-hS-bHp" firstAttribute="top" secondItem="Y11-fr-fLE" secondAttribute="bottom" constant="8" symbolic="YES" id="wZC-pA-0Le"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="genreLabel" destination="qhL-hS-bHp" id="xB2-pj-rbC"/>
                         <outlet property="name" destination="Y11-fr-fLE" id="z0Q-Wy-Yua"/>
                         <outlet property="posterImage" destination="TQz-6F-YfA" id="bsE-63-Emz"/>
                     </connections>

@@ -83,6 +83,16 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		CE0E3A2225D3F2920013C7EA /* Suppirting Files */ = {
+			isa = PBXGroup;
+			children = (
+				CE5563CB25764954001DEAA2 /* AppDelegate.swift */,
+				CE5563CD25764954001DEAA2 /* SceneDelegate.swift */,
+				CE5563D725764957001DEAA2 /* Assets.xcassets */,
+			);
+			path = "Suppirting Files";
+			sourceTree = "<group>";
+		};
 		CE5563BF25764954001DEAA2 = {
 			isa = PBXGroup;
 			children = (
@@ -104,18 +114,16 @@
 		CE5563CA25764954001DEAA2 /* movieTest */ = {
 			isa = PBXGroup;
 			children = (
-				CE5563CB25764954001DEAA2 /* AppDelegate.swift */,
-				CE5563CD25764954001DEAA2 /* SceneDelegate.swift */,
 				CE5563F625765996001DEAA2 /* List.storyboard */,
+				CE0E3A2225D3F2920013C7EA /* Suppirting Files */,
 				CE5563EF25764D2E001DEAA2 /* ViewControllers */,
 				CEC0BA4225768905002B9D04 /* Models */,
 				CEC0BA3E2576884F002B9D04 /* Netvorking */,
 				CE5563FE257665C7001DEAA2 /* cells */,
 				CECD3006257A823100CEDB60 /* Service */,
 				CE7C57C62579399600AB5A42 /* CoreDara */,
-				CE5563D725764957001DEAA2 /* Assets.xcassets */,
-				CE5563D925764957001DEAA2 /* LaunchScreen.storyboard */,
 				CE5563DC25764957001DEAA2 /* Info.plist */,
+				CE5563D925764957001DEAA2 /* LaunchScreen.storyboard */,
 			);
 			path = movieTest;
 			sourceTree = "<group>";
@@ -124,8 +132,8 @@
 			isa = PBXGroup;
 			children = (
 				CE5563E925764D13001DEAA2 /* ListViewController.swift */,
-				CE5563EC25764D24001DEAA2 /* FavouritesViewController.swift */,
 				CE556407257673E9001DEAA2 /* DetailViewController.swift */,
+				CE5563EC25764D24001DEAA2 /* FavouritesViewController.swift */,
 				CECBB8312577C7DB00BD5E69 /* DitailFavouriteViewController.swift */,
 				CE5563CF25764954001DEAA2 /* TabBarController.swift */,
 			);
