@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct NetworkService {
+class NetworkService {
     static let shared = NetworkService()
     
     typealias HandleForMovieList = (Result<Movies,Error>) -> ()
